@@ -78,7 +78,7 @@ int	ft_putnbr_base(int nbr, char *base)
 	count += 1;
 	return (count);
 }
-#include <stdio.h>
+/*#include <stdio.h>
 int	main(void)
 {
 	int		count_ft;
@@ -117,4 +117,4 @@ int	main(void)
 	printf(" | (ft_putnbr_base count = %d)\n\n", count_ft);
 
 	return (0);
-}
+}*/

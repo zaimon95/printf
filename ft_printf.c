@@ -20,13 +20,13 @@ void	if_cond(const char *s, size_t i, va_list args, int count)
 		count++;
 	}
 	else if (s[i] == 'd')
-		ft_putnbr_fd((int)va_arg(args, int), 1);
+		count += ft_putnbr_fd((int)va_arg(args, int), 1);
 	else if (s[i] == 's')
-		ft_putstr_fd((char *)va_arg(args, char *), 1);
+		count += ft_putstr_fd((char *)va_arg(args, char *), 1);
 	else if (s[i] == 'u')
-		return ;
+		count += ft_putnbr_unsigned((unsigned int)va_arg(args, unsigned int));
 	else if (s[i] == 'i')
-		ft_putnbr_fd((int)va_arg(args, int), 1);
+		count += ft_putnbr_fd((int)va_arg(args, int), 1);
 	else if (s[i] == 'x')
 		count += ft_putnbr_base((int)va_arg(args, int), "0123456789abcdef");
 	else if (s[i] == 'X')
@@ -42,7 +42,7 @@ void	if_cond(const char *s, size_t i, va_list args, int count)
 
 int	ft_printf(const char *s, ...)
 {
-	int count;
+	int		count;
 	va_list	args;
 	size_t	i;
 

@@ -5,6 +5,7 @@ CC := cc
 SRC := 	ft_printf.c \
 		ft_putvoid.c \
 		ft_putnbr_base.c \
+		ft_putnbr_unsigned.c \
 		libft/ft_atoi.c \
 		libft/ft_bzero.c \
 		libft/ft_calloc.c \
