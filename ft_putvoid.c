@@ -15,27 +15,27 @@
 int	ft_putvoid(void const *p)
 {
 	unsigned long	adr;
-	char			base[] = "0123456789abcdef";
-	char			res[17]; // 16 digits max for 64-bit + '\0'
+	char			res[17];
 	int				i;
 	int				count;
+	const char		*g_base;
 
-	if (p == NULL)
-		return (write(1, "0x0", 3));
-
+	g_base = "0123456789abcdef";
+	if (p == 0)
+		return (write(1, "(nil)", 5));
 	adr = (unsigned long)p;
 	i = 16;
 	res[i] = '\0';
 	while (adr > 0)
 	{
-		res[--i] = base[adr % 16];
+		res[--i] = g_base[adr % 16];
 		adr /= 16;
 	}
 	count = write(1, "0x", 2);
 	count += write(1, &res[i], 16 - i);
 	return (count);
 }
-
+/*
 #include <stdio.h>
 int main (void)
 {
@@ -45,4 +45,4 @@ int main (void)
    ft_putvoid (p);
  
    return 0;
-}
+}*/

@@ -19,9 +19,8 @@ int	ft_putnbr_unsigned(unsigned int a)
 
 	count = 0;
 	if (a >= 10)
-		ft_putnbr_unsigned(a / 10);
+		count += ft_putnbr_unsigned(a / 10);
 	c = a % 10 + '0';
-	write(1, &c, 1);
-	count++;
+	count += write(1, &c, 1);
 	return (count);
 }

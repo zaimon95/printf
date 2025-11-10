@@ -18,7 +18,7 @@
 # include "libft/libft.h"
 
 int	ft_printf(const char *s, ...);
-int	ft_putnbr_base(int nbr, char *base);
+int	ft_putnbr_hexa(unsigned long n, int upper);
 int	ft_putvoid(void const *p);
 int	ft_putnbr_unsigned(unsigned int n);
 

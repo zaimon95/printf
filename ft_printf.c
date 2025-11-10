@@ -12,32 +12,27 @@
 
 #include "ft_printf.h"
 
-void	if_cond(const char *s, size_t i, va_list args, int count)
+int	if_cond(const char *s, size_t i, va_list args)
 {
 	if (s[i] == 'c')
-	{
-		ft_putchar_fd((char)va_arg(args, int), 1);
-		count++;
-	}
+		return (ft_putchar_fd(va_arg(args, int), 1));
 	else if (s[i] == 'd')
-		count += ft_putnbr_fd((int)va_arg(args, int), 1);
+		return (ft_putnbr_fd(va_arg(args, int), 1));
 	else if (s[i] == 's')
-		count += ft_putstr_fd((char *)va_arg(args, char *), 1);
+		return (ft_putstr_fd(va_arg(args, char *), 1));
 	else if (s[i] == 'u')
-		count += ft_putnbr_unsigned((unsigned int)va_arg(args, unsigned int));
+		return (ft_putnbr_unsigned(va_arg(args, unsigned int)));
 	else if (s[i] == 'i')
-		count += ft_putnbr_fd((int)va_arg(args, int), 1);
+		return (ft_putnbr_fd(va_arg(args, int), 1));
 	else if (s[i] == 'x')
-		count += ft_putnbr_base((int)va_arg(args, int), "0123456789abcdef");
+		return (ft_putnbr_hexa(va_arg(args, unsigned int), 0));
 	else if (s[i] == 'X')
-		count += ft_putnbr_base((int)va_arg(args, int), "0123456789ABCDEF");
+		return (ft_putnbr_hexa(va_arg(args, unsigned int), 1));
 	else if (s[i] == '%')
-	{
-		ft_putchar_fd('%', 1);
-		count++;
-	}
+		return (ft_putchar_fd('%', 1));
 	else if (s[i] == 'p')
-		count += ft_putvoid((void *)va_arg(args, void *));
+		return (ft_putvoid(va_arg(args, void *)));
+	return (0);
 }
 
 int	ft_printf(const char *s, ...)
@@ -49,20 +44,22 @@ int	ft_printf(const char *s, ...)
 	va_start(args, s);
 	i = 0;
 	count = 0;
-	while (!s[i])
+	if (s == NULL)
+		return (0);
+	while (s[i])
 	{
 		if (s[i] == '%')
 		{
 			i++;
-			if_cond(s, i, args, count);
+			count += if_cond(s, i, args);
 		}
 		else
 		{
-			ft_putchar_fd(*s, 1);
+			ft_putchar_fd(s[i], 1);
 			count++;
 		}
 		i++;
 	}
-	return (count);
 	va_end(args);
+	return (count);
 }

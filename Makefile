@@ -2,69 +2,38 @@ NAME := libftprintf.a
 
 CC := cc
 
+LIBFT := libft.a
+
+LIBFT_DIR := libft
+
 SRC := 	ft_printf.c \
 		ft_putvoid.c \
 		ft_putnbr_base.c \
-		ft_putnbr_unsigned.c \
-		libft/ft_atoi.c \
-		libft/ft_bzero.c \
-		libft/ft_calloc.c \
-		libft/ft_isalnum.c \
-		libft/ft_isalpha.c \
-		libft/ft_isascii.c \
-		libft/ft_isdigit.c \
-		libft/ft_isprint.c \
-		libft/ft_itoa.c \
-		libft/ft_memchr.c \
-		libft/ft_memcmp.c \
-		libft/ft_memcpy.c \
-		libft/ft_memmove.c \
-		libft/ft_memset.c \
-		libft/ft_putchar_fd.c \
-		libft/ft_putendl_fd.c \
-		libft/ft_putnbr_fd.c \
-		libft/ft_putstr_fd.c \
-		libft/ft_split.c \
-		libft/ft_strchr.c \
-		libft/ft_strdup.c \
-		libft/ft_striteri.c \
-		libft/ft_strjoin.c \
-		libft/ft_strlcat.c \
-		libft/ft_strlcpy.c \
-		libft/ft_strlen.c \
-		libft/ft_strmapi.c \
-		libft/ft_strncmp.c \
-		libft/ft_strnstr.c \
-		libft/ft_strrchr.c \
-		libft/ft_strtrim.c \
-		libft/ft_substr.c \
-		libft/ft_tolower.c \
-		libft/ft_toupper.c
-
-SRC_BONUS :=	 \
+		ft_putnbr_unsigned.c 
 
 CFLAGS := -Wall -Wextra -Werror
 
 OBJ := $(SRC:.c=.o)
 
-OBJ_BONUS := $(SRC_BONUS:.c=.o)
-
 all : $(NAME)
 
-bonus : $(OBJ) $(OBJ_BONUS)
-	ar rcs $(NAME) $(OBJ) $(OBJ_BONUS)
-
 $(NAME): $(OBJ)
+	make -C $(LIBFT_DIR)
+	cp $(LIBFT_DIR)/$(LIBFT) .
+	mv $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJ)
 
-%.o: %.c ft_printf.h libft/libft.h
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ): %.o: %.c ft_printf.h
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(LIBFT_DIR)/
+
 clean :
-	rm -f $(OBJ) $(OBJ_BONUS)
+	make clean -C $(LIBFT_DIR)
+	rm -f $(OBJ)
 
 fclean : clean
+	make fclean -C $(LIBFT_DIR)
 	rm -f $(NAME)
 
 re : fclean all
 
-.PHONY : all bonus clean fclean re
+.PHONY : all clean fclean re
